@@ -1,0 +1,53 @@
+/ot/detector/rmax 2000 mm
+/run/initialize
+
+# create viewer draw volumes
+/vis/open OGL 600x600-0+0
+/vis/drawVolume
+
+# set viewer camera point
+/vis/viewer/set/viewpointVector -0.540908 0.438371 0.717809
+
+# print event process status
+/vis/verbose warnings
+
+# print tracking status
+/tracking/verbose 1
+
+# draw volumes in surface style
+/vis/viewer/set/style surface
+
+# draw in perspective
+/vis/viewer/set/projection perspective 10 deg
+
+# draw axes
+/vis/scene/add/axes 0 0 0 2000 mm
+
+# set background colour
+/vis/viewer/set/background white
+
+# draw trajectory (smooth / rich)
+/vis/scene/add/trajectories smooth
+
+# draw step points
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 1
+
+# draw all events when multiple events are simulated at once
+/vis/scene/endOfEventAction accumulate
+
+#field setting from OTDCMessenger
+/ot/field/option global
+#/ot/field/option local
+#/ot/field/value 0 0 1 tesla
+
+# general particle source setting
+/gps/position  2000 0 0 mm
+/gps/direction -1 0 0
+/gps/energy    20 MeV
+#/gps/particle  e-
+/gps/particle  proton
+
+# run
+/run/beamOn 1
